@@ -1,17 +1,43 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>Visualizations</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Visualizations — 你的名字</title>
+  <link rel="stylesheet" href="style.css" />
   <script defer src="vis.js"></script>
 </head>
 <body>
-  <h1>My Visualizations</h1>
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="brand">Visualizations</h1>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="visualizations.html" aria-current="page">Visualizations</a>
+      </nav>
+    </div>
+  </header>
 
-  <h2>Skill Bar Chart (SVG)</h2>
-  <div id="chart"></div> <!-- 这里放柱状图 -->
+  <main class="container flow">
+    <section class="card">
+      <h2>SVG Visualization (Bar Chart)</h2>
+      <div class="viz-wrap">
+        <!-- JS 将在这里插入一个可缩放的 SVG 柱状图 -->
+        <div id="barChartMount" class="viz-mount" aria-label="Bar chart"></div>
+      </div>
+    </section>
 
-  <h2>Creative SVG Art</h2>
-  <div id="art"></div> <!-- 这里放创意艺术 -->
+    <section class="card">
+      <h2>Creative SVG Art (JS-generated)</h2>
+      <div class="viz-wrap">
+        <!-- JS 将在这里插入一个创意 SVG 动画 -->
+        <div id="artMount" class="viz-mount" aria-label="Generative art"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container small muted">© <span id="year"></span> 你的名字</div>
+  </footer>
 </body>
 </html>
