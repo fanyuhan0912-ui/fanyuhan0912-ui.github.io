@@ -1,1 +1,83 @@
-<h1>hello world</h1>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>你的名字 — Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="main.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="brand">你的名字</h1>
+      <nav class="nav">
+        <a href="index.html" aria-current="page">Home</a>
+        <a href="visualizations.html">Visualizations</a>
+        <button id="themeToggle" class="btn-ghost" aria-pressed="false" title="Toggle theme">🌙</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container flow">
+    <section id="intro" class="card">
+      <h2>About</h2>
+      <p>我是 XX 专业学生，对 HCI / 前端 / 数据可视化感兴趣。这里是我的个人网站与项目合集。</p>
+      <ul class="meta">
+        <li><strong>Email:</strong> <a href="mailto:you@example.com">you@example.com</a></li>
+        <li><strong>GitHub:</strong> <a href="https://github.com/yourusername" target="_blank" rel="noreferrer">yourusername</a></li>
+        <li><strong>LinkedIn:</strong> <a href="#" target="_blank" rel="noreferrer">Your LinkedIn</a></li>
+      </ul>
+    </section>
+
+    <section id="education" class="card">
+      <h2>Education</h2>
+      <ul>
+        <li><strong>Simon Fraser University</strong> — Major in XXXX（202X–至今）</li>
+        <li>相关课程：HCI、Web、Data Viz、JS、p5.js …</li>
+      </ul>
+    </section>
+
+    <section id="skills" class="card">
+      <h2>Skills</h2>
+      <ul class="tags">
+        <li>HTML</li><li>CSS</li><li>JavaScript</li><li>p5.js</li>
+        <li>Figma</li><li>Git / GitHub</li>
+      </ul>
+    </section>
+
+    <section id="experience" class="card">
+      <h2>Experience / Projects</h2>
+      <article class="item">
+        <h3>项目A — 关键词</h3>
+        <p>一句话概述你的角色与成果。可附 <a href="#" target="_blank" rel="noreferrer">仓库/预览链接</a>。</p>
+      </article>
+      <article class="item">
+        <h3>项目B — 关键词</h3>
+        <p>一句话概述你的角色与成果。</p>
+      </article>
+    </section>
+
+    <section id="contact" class="card">
+      <h2>Contact</h2>
+      <form id="contactForm" novalidate class="form">
+        <label>
+          Your Email
+          <input type="email" id="email" name="email" placeholder="you@example.com" required />
+        </label>
+        <label>
+          Message
+          <textarea id="message" name="message" placeholder="Write 10+ characters…" minlength="10" required></textarea>
+        </label>
+        <button type="submit" class="btn-primary">Send (demo)</button>
+        <p id="formStatus" role="status" aria-live="polite" class="visually-hidden"></p>
+      </form>
+      <p class="muted">*演示表单：不会真正发送邮件，仅做前端校验示例。</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container small muted">© <span id="year"></span> 你的名字. All rights reserved.</div>
+  </footer>
+</body>
+</html>
