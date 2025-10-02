@@ -1,140 +1,105 @@
-document.addEventListener('DOMContentLoaded', ()=>{
-  mountBarChart();
-  mountArt();
-  // 页脚年份
-  const year = document.getElementById('year');
-  if (year) year.textContent = new Date().getFullYear();
+document.addEventListener("DOMContentLoaded", () => {
+  makeBarChart();
+  makeArt();
 });
 
-function mountBarChart(){
-  const host = document.getElementById('barChartMount');
-  if (!host) return;
-
+// ==================== 柱状图 ====================
+function makeBarChart() {
   const data = [
-    { label: 'HTML', value: 9 },
-    { label: 'CSS', value: 8 },
-    { label: 'JS', value: 7 },
-    { label: 'p5.js', value: 6 },
-    { label: 'Figma', value: 7 },
+    { skill: "HTML", value: 9 },
+    { skill: "CSS", value: 8 },
+    { skill: "JavaScript", value: 7 },
+    { skill: "p5.js", value: 6 }
   ];
 
-  const pad = { t: 24, r: 24, b: 48, l: 40 };
-  const W = host.clientWidth || 640;
-  const H = Math.max(320, host.clientHeight || 360);
-  const innerW = W - pad.l - pad.r;
-  const innerH = H - pad.t - pad.b;
+  const width = 400, height = 300;
+  const svg = createSVG(width, height);
 
-  const svg = makeSVG('svg', { viewBox: `0 0 ${W} ${H}`, width: '100%', height:'100%', role: 'img' });
-  svg.appendChild(makeSVG('rect', { x:0, y:0, width:W, height:H, rx:14, fill:'rgba(255,255,255,0.02)' }));
+  const barWidth = 60;
+  const gap = 20;
+  const maxValue = Math.max(...data.map(d => d.value));
 
-  // 轴线
-  svg.appendChild(makeSVG('line', { x1: pad.l, y1: H - pad.b, x2: W - pad.r, y2: H - pad.b, stroke:'rgba(255,255,255,.3)' }));
+  data.forEach((d, i) => {
+    const barHeight = (d.value / maxValue) * (height - 50);
+    const x = i * (barWidth + gap) + 40;
+    const y = height - barHeight - 20;
 
-  const maxV = Math.max(...data.map(d=>d.value));
-  const barW = innerW / data.length * 0.7;
-  const gap = innerW / data.length * 0.3;
-
-  data.forEach((d, i)=>{
-    const x = pad.l + i*(barW+gap);
-    const h = (d.value / maxV) * innerH;
-    const y = H - pad.b - h;
-
-    const g = makeSVG('g', {});
-
-    const gradId = `g${i}`;
-    const defs = makeSVG('defs',{});
-    const lg = makeSVG('linearGradient', { id: gradId, x1:'0',y1:'0', x2:'0', y2:'1' });
-    lg.appendChild(makeSVG('stop', { offset:'0%', stop-color:'var(--accent)'}));
-    lg.appendChild(makeSVG('stop', { offset:'100%', stop-color:'var(--accent-2)'}));
-    defs.appendChild(lg);
-    g.appendChild(defs);
-
-    const rect = makeSVG('rect', {
-      x, y, width:barW, height:h, rx:10, fill:`url(#${gradId})`
+    // 柱子
+    const rect = make("rect", {
+      x, y,
+      width: barWidth,
+      height: barHeight,
+      fill: "skyblue"
     });
-    // 动画出现
-    rect.animate([{height:0, y:H - pad.b}, {height:h, y}], {duration:600, fill:'forwards', delay: i*80});
-    g.appendChild(rect);
+    svg.appendChild(rect);
 
     // 标签
-    g.appendChild(makeSVG('text', {
-      x: x + barW/2, y: H - pad.b + 18, 'text-anchor':'middle', fill:'var(--muted)', 'font-size':'12'
-    }, d.label));
+    const label = make("text", {
+      x: x + barWidth / 2,
+      y: height - 5,
+      "text-anchor": "middle",
+      "font-size": "12",
+      fill: "black"
+    });
+    label.textContent = d.skill;
+    svg.appendChild(label);
 
     // 数值
-    g.appendChild(makeSVG('text', {
-      x: x + barW/2, y: y - 6, 'text-anchor':'middle', fill:'var(--text)', 'font-size':'12'
-    }, d.value.toString()));
-
-    svg.appendChild(g);
+    const value = make("text", {
+      x: x + barWidth / 2,
+      y: y - 5,
+      "text-anchor": "middle",
+      "font-size": "12",
+      fill: "black"
+    });
+    value.textContent = d.value;
+    svg.appendChild(value);
   });
 
-  host.innerHTML = '';
-  host.appendChild(svg);
+  document.getElementById("chart").appendChild(svg);
 }
 
-function mountArt(){
-  const host = document.getElementById('artMount');
-  if (!host) return;
+// ==================== 创意艺术 ====================
+function makeArt() {
+  const width = 300, height = 300;
+  const svg = createSVG(width, height);
 
-  const W = host.clientWidth || 640;
-  const H = Math.max(320, host.clientHeight || 360);
-  const cx = W/2, cy = H/2;
+  const cx = width / 2, cy = height / 2;
+  const petals = 6, radius = 100;
 
-  const svg = makeSVG('svg', { viewBox:`0 0 ${W} ${H}`, width:'100%', height:'100%' });
-  svg.appendChild(makeSVG('rect', { x:0,y:0,width:W,height:H,rx:14, fill:'rgba(255,255,255,0.02)'}));
+  for (let i = 0; i < petals; i++) {
+    const angle = (i / petals) * 2 * Math.PI;
+    const x = cx + Math.cos(angle) * radius;
+    const y = cy + Math.sin(angle) * radius;
 
-  // 花朵样式的生成艺术（五瓣+轨道小球）
-  const petals = 5;
-  const R1 = Math.min(W,H)*0.18;
-  const R2 = R1*0.45;
-
-  for (let i=0;i<petals;i++){
-    const a = (i/petals) * Math.PI*2;
-    const px = cx + Math.cos(a)*R1;
-    const py = cy + Math.sin(a)*R1;
-    svg.appendChild(makeSVG('circle', {
-      cx:px, cy:py, r:R2, fill:'url(#petalGrad)', opacity:.9
-    }));
+    const circle = make("circle", {
+      cx: x,
+      cy: y,
+      r: 40,
+      fill: "pink",
+      opacity: 0.7
+    });
+    svg.appendChild(circle);
   }
 
-  // 渐变定义
-  const defs = makeSVG('defs',{});
-  const rg = makeSVG('radialGradient', { id:'petalGrad', cx:'50%', cy:'50%', r:'50%' });
-  rg.appendChild(makeSVG('stop', { offset:'0%', 'stop-color':'var(--accent-2)' }));
-  rg.appendChild(makeSVG('stop', { offset:'100%', 'stop-color':'var(--accent)' }));
-  defs.appendChild(rg);
-  svg.appendChild(defs);
-
   // 中心
-  svg.appendChild(makeSVG('circle', { cx, cy, r:R2*0.9, fill:'var(--text)', opacity:.1 }));
+  const center = make("circle", {
+    cx, cy, r: 50, fill: "yellow"
+  });
+  svg.appendChild(center);
 
-  // 轨道与小球动画
-  const orbitR = Math.min(W,H)*0.28;
-  const orb = makeSVG('circle', { cx, cy, r:orbitR, fill:'none', stroke:'rgba(255,255,255,.15)' });
-  svg.appendChild(orb);
-
-  const ball = makeSVG('circle', { cx: cx+orbitR, cy, r:6, fill:'var(--accent)' });
-  svg.appendChild(ball);
-
-  let t0 = performance.now();
-  (function tick(t){
-    const dt = (t - t0)/1000;
-    const angle = dt * 0.9; // rad/s
-    const x = cx + Math.cos(angle)*orbitR;
-    const y = cy + Math.sin(angle)*orbitR;
-    ball.setAttribute('cx', x.toFixed(2));
-    ball.setAttribute('cy', y.toFixed(2));
-    requestAnimationFrame(tick);
-  })(t0);
-
-  host.innerHTML = '';
-  host.appendChild(svg);
+  document.getElementById("art").appendChild(svg);
 }
 
-function makeSVG(tag, attrs={}, text){
-  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
-  for (const k in attrs) el.setAttribute(k, attrs[k]);
-  if (text != null) el.textContent = text;
+// ==================== 工具函数 ====================
+function createSVG(width, height) {
+  return make("svg", { width, height });
+}
+
+function make(tag, attrs) {
+  const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for (let key in attrs) {
+    el.setAttribute(key, attrs[key]);
+  }
   return el;
 }
