@@ -255,4 +255,16 @@ input:focus, textarea:focus{ outline:2px solid var(--accent); }
     align-items: center;     
     gap: 0.5rem;
   }
+.intro_1 h3{
+    font-size:1.2rem;
+    font-weight: 500;
+    text-shadow: 
+    1px 1px 0 #666666,   
+    2px 2px 5px rgba(65, 65, 65, 0.5); 
+    display: flex;
+    flex-direction: column;  
+    align-items: center;  
+
+
+}
 }
