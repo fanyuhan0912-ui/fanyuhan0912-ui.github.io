@@ -1,22 +1,59 @@
-:root{
-  --bg: #0b0f14;
-  --panel: #121923;
+:root {
+  --bg: linear-gradient(to right, #000000, #212531);  
+  --panel: linear-gradient(to right, #212531, #37404f); 
   --text: #e8eef5;
   --muted: #a9b4c2;
-  --accent: #6ee7f2;
+  --accent: #cdf26e;
   --accent-2: #86efac;
   --radius: 14px;
   --shadow: 0 8px 24px rgba(0,0,0,.25);
+  --chart-text:white;
 }
 
-html[data-theme="light"]{
-  --bg: #f7fafc;
-  --panel: #ffffff;
-  --text: #0b0f14;
-  --muted: #4b5563;
+html[data-theme="light"] {
+  --bg: linear-gradient(to right, #dfeaf0, #dee9ef);   
+  --panel: linear-gradient(to right, #dee9ef, #dee9ef); 
+  --text: #161c34;
+  --muted: #364585;
   --accent: #0ea5e9;
   --accent-2: #16a34a;
+  --chart-text:black;
 }
+.intro_1 h3{
+    font-size:2rem;
+  text-shadow: 
+    1px 1px 0 #666666,   
+    2px 2px 5px rgba(65, 65, 65, 0.5); 
+
+
+}
+
+/*meta text color in light mode*/
+html[data-theme="light"] .meta a {
+  color: #0089c9;   
+}
+
+html[data-theme="light"] .meta a:hover {
+  color: #009a38;   
+}
+
+/*contact box color in light mode*/
+
+html[data-theme="light"] #contact input,
+html[data-theme="light"] #contact textarea {
+  background-color: #f0f8ff;   
+  color: #0b0f14;              
+  border: 2px solid #0ea5e9;   
+}
+
+html[data-theme="light"] #contact input:focus,
+html[data-theme="light"] #contact textarea:focus {
+  background-color: #ffffff;   
+  border-color: #16a34a;      
+  box-shadow: 0 0 6px rgba(14,165,233,0.6); 
+  outline: none;
+}
+
 
 *{ box-sizing: border-box; }
 html,body{ height:100%; }
@@ -26,6 +63,21 @@ body{
   background: var(--bg);
   color: var(--text);
 }
+
+
+.intro_2 {
+  display: flex;
+  align-items: center;   
+  gap: 1.5rem;          
+}
+
+
+.intro_1 {
+  display: flex;
+  flex-direction: column; 
+  gap: 0.8rem;            
+}
+
 
 .container{ width:min(1100px, 92%); margin-inline:auto; }
 .flow > * + *{ margin-top: 1.25rem; }
@@ -57,7 +109,7 @@ body{
   box-shadow: var(--shadow);
   padding: 1.25rem 1.1rem;
 }
-
+/*image control*/
 .project-img {
   display: block;         
   margin: 0 auto 1rem;     
@@ -66,10 +118,34 @@ body{
   border-radius: 12px;    
   box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
 }
+.personal-img {
+  display: block;         
+  margin: 0 auto 0;     
+  max-width: 30%;         
+  height: auto;            
 
 
-.meta{ padding-left:1rem; }
-.meta li + li{ margin-top:.25rem; }
+}
+
+.meta a {
+  color: #9dceff;
+  text-decoration: none;
+}
+
+.meta a:hover {
+  color: #ff9068;
+  text-decoration: underline;
+}
+.meta {
+  display: flex;
+  flex-direction: row; 
+  gap: 6rem;               
+  justify-content: center;  
+  align-items: center; 
+  margin-top: 5rem;     
+}
+
+
 
 .tags{ list-style:none; padding:0; display:flex; flex-wrap:wrap; gap:.5rem; }
 .tags li{
@@ -106,7 +182,7 @@ input:focus, textarea:focus{ outline:2px solid var(--accent); }
   padding:.5rem;
 }
 
-/* 响应式 */
+
 @media (max-width: 640px){
   .header-inner{ gap:.75rem; }
   .brand{ font-size:1.1rem; }

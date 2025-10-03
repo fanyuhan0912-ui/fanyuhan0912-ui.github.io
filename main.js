@@ -6,7 +6,7 @@
   const year = document.getElementById('year');
   if (year) year.textContent = new Date().getFullYear();
 
-  // 主题切换（保存到 localStorage）
+
   if (themeBtn){
     const saved = localStorage.getItem('theme') || 'dark';
     if (saved === 'light') html.setAttribute('data-theme','light');
@@ -18,7 +18,7 @@
     });
   }
 
-  // 简单表单校验（不做真实发送）
+ 
   if (form){
     form.addEventListener('submit', (e)=>{
       e.preventDefault();

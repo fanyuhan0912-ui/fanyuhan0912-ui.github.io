@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Visualizations — 你的名字</title>
+  <title>Visualizations — Carolyn Fan</title>
   <link rel="stylesheet" href="style.css" />
   <script defer src="vis.js"></script>
 </head>
@@ -14,30 +14,29 @@
       <nav class="nav">
         <a href="index.html">Home</a>
         <a href="visualizations.html" aria-current="page">Visualizations</a>
+        <button id="themeToggle" class="btn-ghost" aria-pressed="false" title="Toggle theme">🌙</button>
       </nav>
     </div>
   </header>
 
   <main class="container flow">
     <section class="card">
-      <h2>SVG Visualization (Bar Chart)</h2>
+      <h2>Top Reasons for Procrastination (Horizontal Bar Chart)</h2>
       <div class="viz-wrap">
-        <!-- JS 将在这里插入一个可缩放的 SVG 柱状图 -->
-        <div id="barChartMount" class="viz-mount" aria-label="Bar chart"></div>
+        <div id="delayChart" class="viz-mount" aria-label="Delay reason chart"></div>
       </div>
     </section>
 
     <section class="card">
-      <h2>Creative SVG Art (JS-generated)</h2>
+      <h2>Preferred Learning Positions (Bar Chart)</h2>
       <div class="viz-wrap">
-        <!-- JS 将在这里插入一个创意 SVG 动画 -->
-        <div id="artMount" class="viz-mount" aria-label="Generative art"></div>
+        <div id="postureChart" class="viz-mount" aria-label="Study posture chart"></div>
       </div>
     </section>
   </main>
 
   <footer class="site-footer">
-    <div class="container small muted">© <span id="year"></span> 你的名字</div>
+    <div class="container small muted">© <span id="year"></span> Carolyn Fan</div>
   </footer>
 </body>
 </html>
