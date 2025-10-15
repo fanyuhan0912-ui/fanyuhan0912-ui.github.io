@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // ==================== make delay chart  ====================
 function makeDelayChart() {
+
   const data = [
     { reason: "phone", value: 50 },
     { reason: "stardew valley", value: 20 },
@@ -31,31 +32,104 @@ function makeDelayChart() {
     { reason: "tidy up room", value: 5 }
   ];
 
+  
   const width = 500, height = 300;
-  const svg = createSVG(width, height);
-
   const barHeight = 30;
   const gap = 15;
+  const leftLabelSpace = 120;
+  const rightPadding = 20;
+
+  
+  const svg = createSVG(width, height);
+
+ 
+  let tooltip = document.getElementById('chartTooltip');
+  if (!tooltip) {
+    tooltip = document.createElement('div');
+    tooltip.id = 'chartTooltip';
+    document.body.appendChild(tooltip);
+  }
+
+ 
+  const showTooltip = (text, x, y) => {
+    tooltip.textContent = text;
+    tooltip.style.left = `${x}px`;
+    tooltip.style.top = `${y}px`;
+    tooltip.style.opacity = '1';
+  };
+  const hideTooltip = () => {
+    tooltip.style.opacity = '0';
+  };
+
   const maxValue = Math.max(...data.map(d => d.value));
 
   data.forEach((d, i) => {
-    const barWidth = (d.value / maxValue) * (width - 150); 
-    const x = 120; 
     const y = i * (barHeight + gap) + 30;
+    const barWidth = (d.value / maxValue) * (width - leftLabelSpace - rightPadding);
 
 
-
-    // bar
     const rect = make("rect", {
-      x, y,
+      x: leftLabelSpace,
+      y,
       width: barWidth,
       height: barHeight,
-      fill: d.value === maxValue ? "red" : "#0ea5e9"  
+      fill: d.value === maxValue ? "red" : "#0ea5e9",
+      rx: 4, ry: 4
     });
+
+   
+    rect.setAttribute("tabindex", "0");
+    rect.setAttribute("role", "img");
+    rect.setAttribute("aria-label", `${d.reason} ${d.value} percent`);
+
+ 
+    const hoverFill = "#22c55e"; 
+    const originalFill = rect.getAttribute("fill");
+
+    const onEnter = (ev) => {
+      rect.setAttribute("fill", hoverFill);
+      const pageX = ev.pageX ?? (ev.touches && ev.touches[0]?.pageX) ?? 0;
+      const pageY = ev.pageY ?? (ev.touches && ev.touches[0]?.pageY) ?? 0;
+      showTooltip(`${d.reason}: ${d.value}%`, pageX + 12, pageY - 12);
+    };
+    const onMove = (ev) => {
+      const pageX = ev.pageX ?? (ev.touches && ev.touches[0]?.pageX) ?? 0;
+      const pageY = ev.pageY ?? (ev.touches && ev.touches[0]?.pageY) ?? 0;
+      showTooltip(`${d.reason}: ${d.value}%`, pageX + 12, pageY - 12);
+    };
+    const onLeave = () => {
+      rect.setAttribute("fill", originalFill);
+      hideTooltip();
+    };
+    const onFocus = (ev) => {
+      rect.setAttribute("fill", hoverFill);
+    
+      const bbox = rect.getBoundingClientRect();
+      const pageX = window.scrollX + bbox.x + bbox.width;
+      const pageY = window.scrollY + bbox.y;
+      showTooltip(`${d.reason}: ${d.value}%`, pageX + 12, pageY - 12);
+    };
+    const onBlur = onLeave;
+    const onKey = (ev) => {
+      
+      if (ev.key === "Enter" || ev.key === " ") {
+        ev.preventDefault();
+        onFocus(ev);
+      }
+     
+      if (ev.key === "Escape") hideTooltip();
+    };
+
+    rect.addEventListener("mouseenter", onEnter);
+    rect.addEventListener("mousemove", onMove);
+    rect.addEventListener("mouseleave", onLeave);
+    rect.addEventListener("focus", onFocus);
+    rect.addEventListener("blur", onBlur);
+    rect.addEventListener("keydown", onKey);
+
     svg.appendChild(rect);
 
 
-    // label
     const label = make("text", {
       x: 10,
       y: y + barHeight / 2 + 5,
@@ -65,19 +139,22 @@ function makeDelayChart() {
     label.textContent = d.reason;
     svg.appendChild(label);
 
-    // number
-    const value = make("text", {
-      x: x + barWidth + 5,
+   
+    const valueText = make("text", {
+      x: leftLabelSpace + barWidth + 5,
       y: y + barHeight / 2 + 5,
       "font-size": "12",
       fill: "currentColor"
     });
-    value.textContent = d.value + "%";
-    svg.appendChild(value);
+    valueText.textContent = d.value + "%";
+    svg.appendChild(valueText);
   });
 
+  
+  document.getElementById("delayChart").innerHTML = ""; // 清空后再挂
   document.getElementById("delayChart").appendChild(svg);
 }
+
 
 // ==================== make posture pie chart ====================
 function makePostureChart() {
@@ -162,3 +239,4 @@ function make(tag, attrs) {
   }
   return el;
 }
+
