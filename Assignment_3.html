@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Assignment 3 Visualization1 — Carolyn Fan</title>
+
+  <!-- 引入 Vega 相关库 -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite-api@5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6"></script>
+
+  <link rel="stylesheet" href="style.css" />
+  <script defer src="assign3.js"></script>
+</head>
+
+<body>
+    <!--navigation-->
+  <header class="site-header">
+    <div class="container header-inner">
+      <h1 class="brand">Assignment 3 Visualizations</h1>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="visualizations.html">Visualizations</a>
+        <a href="Assignment_3.html" aria-current="page">Assignment 3</a>
+      </nav>
+    </div>
+  </header>
+    
+  <main class="container flow">
+    <!--visualization 1-->
+    <section class="card">
+      <h2>Visualization 1 — Global Sales by Genre and Platform</h2>
+      <div class="viz-wrap">
+        <div id="delayChart" class="viz-mount" aria-label="Global Sales Chart"></div>
+      </div>
+      <p>Trends. Sales are heavily concentrated in a handful of platforms on the left of the chart; older high-impact systems (e.g., PlayStation family, Xbox 360, Wii, DS) make up the bulk of global sales, while many other platforms contribute only modest totals.
+
+What’s interesting. The genre mix isn’t uniform: Action appears to dominate across most high-selling platforms, while Sports, Shooter, and Role-Playing have noticeable but platform-specific contributions. Wii shows a visibly larger share of family/party-friendly genres compared with the more “core” mixes on PlayStation/Xbox.
+
+Dominance. A small set of platform–genre combinations carry most of the total (e.g., Action on major consoles; Sports on Wii). Sorting platforms by total sales plus color-by-genre makes that dominance and composition easy to read.
+
+Design notes. I used stacked bars to show both total (bar height) and composition (color segments), and sorted the x-axis by total sales to highlight the long-tail pattern.</p>
+    </section>
+
+
+    <!--visualization 2-->
+    <section class="card">
+      <h2>Visualization 2 — Sales Over Time by Platform and Genre</h2>
+      <div class="viz-wrap">
+        <div id="trendChart" class="viz-mount" aria-label="Sales Over Time"></div>
+      </div>
+      <p>Trends. The market builds gradually through the 1990s, rises sharply in the early/mid-2000s, and peaks around the late-2000s before tapering off in the 2010s. The stacked colors reveal generational hand-offs as platforms cycle in and out.
+
+What’s interesting. Genre composition also shifts with time: Action remains consistently large, while Sports, Shooter, and RPG surge in specific windows—likely aligned with major releases and console launches.
+
+Differences by platform/genre. Some generations spike quickly and fade (typical console life cycles), while handheld-friendly eras maintain steadier contributions. The chart makes both the macro cycle (overall boom and decline) and micro shifts (which genres grew when) visible.
+
+Design notes. Keeping Year on the x-axis and stacking by genre emphasizes how total volume and genre mix co-evolve over time without needing multiple small charts.</p>
+    </section>
+
+    <!--visualization 3-->
+    <section class="card">
+      <h2>Visualization 3 — SRegional Sales Heatmap</h2>
+      <div class="viz-wrap">
+        <div id="heatmapChart" class="viz-mount" aria-label="Regional Sales Heatmap"></div>
+      </div>
+    </section>
+    <p>Trends. NA and EU rows are generally darker for most major platforms—indicating higher absolute sales—while JP shows fewer dark cells overall but clear pockets of strength for certain platforms. Other regions tend to be lighter across the board.
+
+What’s interesting. The heat banding highlights regional preference patterns: platforms with strong presence in NA/EU don’t always mirror that strength in JP, and vice versa. Handheld-leaning ecosystems tend to be relatively stronger in JP than their NA/EU counterparts.
+
+Regional dominance. NA/EU dominate absolute sales for the big home-console generations, whereas JP’s intensity concentrates on fewer platforms—consistent with its distinct market and genre culture.
+
+Design notes. A heatmap trades precise values for a compact, scannable matrix; it’s ideal here to spot “where it’s hot” by platform and region at a glance.</p>
+    <!--visualization 4-->
+    <section class="card">
+        <h2>Visualization 4 — Global Video Game Sales Distribution (Map)</h2>
+        <div class="viz-wrap">
+            <div id="salesMap" class="viz-mount" aria-label="Global Sales Map"></div>
+        </div>
+        <p>Trends. North America and Europe clearly contribute the largest total sales (largest, deepest-colored circles); Japan is smaller in absolute terms but still substantial; Other Regions are noticeably lower.
+
+What’s interesting. Seeing the totals on a world map makes the market concentration immediately apparent and complements the earlier charts: the regional bubbles visually anchor where the industry’s core demand has historically been.
+
+Dominance/patterns. NA and EU dominate overall, while JP stands out as a concentrated but influential market with distinct platform/genre strengths. This aligns with the regional contrasts surfaced in the heatmap.
+
+Design notes. Encoding totals by color intensity (and size) on an equal-area projection provides quick spatial context without requiring per-country mapping.</p>
+    </section>
+
+
+
+
+
+
+
+
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="container small muted">© <span id="year"></span> Carolyn Fan</div>
+  </footer>
+</body>
+</html>
